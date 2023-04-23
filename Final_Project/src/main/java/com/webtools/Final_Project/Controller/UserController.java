@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpSession;
 
 
 
+
 @Controller
 public class UserController {
     
@@ -44,7 +45,7 @@ public class UserController {
 	@RequestMapping(value = "register", method = RequestMethod.POST)
 	protected String registerNewUser(@ModelAttribute("user") User user,UserDAO userdao,HttpServletRequest request) throws Exception {
 		    
-		
+	
             System.out.println(user);
             userdao.saveUser(user);
             SimpleMailMessage email = new SimpleMailMessage();

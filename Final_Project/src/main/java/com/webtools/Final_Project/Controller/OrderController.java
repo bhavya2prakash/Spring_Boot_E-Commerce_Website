@@ -101,6 +101,12 @@ public class OrderController {
         model.addAttribute("currency", Currency.USD);
 		return "payment";
 	}
+	@RequestMapping(value = "/payment", method = RequestMethod.GET)
+	public String paymentCompleted() {
+	    // Display payment completion message to the user
+	   
+	    return "userDashboard";
+	}
 	
 	@RequestMapping(value="charge", method = RequestMethod.POST)
 	    public String charge(ModelMap model,HttpServletRequest request)

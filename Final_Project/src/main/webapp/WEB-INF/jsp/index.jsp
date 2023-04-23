@@ -14,10 +14,9 @@
 
     <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
     <title>Behance Organica</title>
-	 
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-	 <script type = "text/javascript" language = "javascript">
-	    
+	<script type = "text/javascript" language = "javascript">
 
 	</script>
 </head>
@@ -46,7 +45,7 @@
 				<table>
 					<tr>
 						<td>First Name:</td>
-						<td><form:input path="firstName" class="form-control" id="firstName" size="30" required="required"/>
+						<td><form:input path="firstName" class="form-control" id="firstName" size="30"/>
 						</td>
 					</tr>
 
@@ -73,7 +72,7 @@
 								
 
 					<tr>
-						<td colspan="2"><input type="submit" value="Register User" class="btn btn-primary"/></td>
+						<td colspan="2"><input type="submit" value="Register User" id="submitButton"class="btn btn-primary"/></td>
 					</tr>
 				</table>
 

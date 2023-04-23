@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 
 import org.springframework.stereotype.Component;
 
+
+
 @Component
 @Entity
 	public class User {
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Component;
 		@Id
 	    @GeneratedValue(strategy=GenerationType.IDENTITY)
 		private int userid;
+		
 	    private String firstName;
 	    private String lastName;
 	    private String emailId;
