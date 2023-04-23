@@ -1,8 +1,14 @@
 package com.webtools.Final_Project.Model;
+
+
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import javax.persistence.OneToOne;
 
 import org.springframework.stereotype.Component;
 
@@ -18,6 +24,9 @@ import org.springframework.stereotype.Component;
 	    private String emailId;
 	    private String password;
 	    private String phoneNumber;
+	    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
+	    Cart cart;
+
 	    
 	    public User(){}
 
@@ -64,12 +73,18 @@ import org.springframework.stereotype.Component;
 	    public void setPhoneNumber(String phoneNumber) {
 	        this.phoneNumber = phoneNumber;
 	    }
+	    
+
+	
 
 		@Override
 		public String toString() {
 			return "User [userid=" + userid + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId="
-					+ emailId + ", password=" + password + ", phoneNumber=" + phoneNumber + "]";
+					+ emailId + ", password=" + password + ", phoneNumber=" + phoneNumber
+					+ "]";
 		}
+
+		
 	    
 	    
 	}

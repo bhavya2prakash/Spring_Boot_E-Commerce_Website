@@ -9,6 +9,9 @@ import org.hibernate.service.ServiceRegistry;
 import org.springframework.stereotype.Component;
 import com.webtools.Final_Project.Model.User;
 import com.webtools.Final_Project.Model.Product;
+import com.webtools.Final_Project.Model.Cart;
+import com.webtools.Final_Project.Model.OrderItem;
+import com.webtools.Final_Project.Model.ChargeRequest;
 
 @Component
 public class HibernateUtil {
@@ -22,7 +25,7 @@ public class HibernateUtil {
 	                // Hibernate settings equivalent to hibernate.cfg.xml's properties
 	                Properties settings = new Properties();
 	                settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-	                settings.put(Environment.URL, "jdbc:mysql://localhost/final_project?createDatabaseIfNotExist=true");
+	                settings.put(Environment.URL, "jdbc:mysql://localhost/webtools?createDatabaseIfNotExist=true");
 	                settings.put(Environment.USER, "root");
 	                settings.put(Environment.PASS, "bhavya1234");
 	                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
@@ -37,7 +40,10 @@ public class HibernateUtil {
 
 	                configuration.addAnnotatedClass(User.class);
 	                configuration.addAnnotatedClass(Product.class);
-
+	                configuration.addAnnotatedClass(Cart.class);
+	                configuration.addAnnotatedClass(OrderItem.class);
+	                configuration.addAnnotatedClass(ChargeRequest.class);
+	                
 	                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 	                    .applySettings(configuration.getProperties()).build();
 

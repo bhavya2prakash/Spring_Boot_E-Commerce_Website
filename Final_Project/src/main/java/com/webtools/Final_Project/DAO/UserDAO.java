@@ -39,5 +39,20 @@ public class UserDAO extends DAO{
 			throw new Exception("Could not get user with email ID:  " + emailId, e);
 		}
 	}
+	public User uniqueCustomer(String emailId) throws  Exception{
+		try {
+			begin();
+			Query q = getSession().createQuery("from User where emailId = :emailId");
+			q.setParameter("emailId", emailId);
+			//q.setString("password", password);			
+			User customer = (User) q.uniqueResult();
+			commit();
+			close();
+			return customer;
+		} catch (HibernateException e) {
+			rollback();
+			throw new Exception("Could not get user with email ID:  " + emailId, e);
+		}
+	}
     
 }

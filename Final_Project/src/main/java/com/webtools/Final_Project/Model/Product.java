@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,7 @@ public class Product {
 	private String productDescription;
 	private int avlQuantity;
 	private float price;
-	
+
 	
 	
 	public Product(){
@@ -86,7 +88,8 @@ public class Product {
 	public void setProductCategory(String productCategory) {
 		this.productCategory = productCategory;
 	}
-
+     
+	
 
 	@Override
 	public String toString() {
