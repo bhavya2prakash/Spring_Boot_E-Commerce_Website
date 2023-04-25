@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,32 +15,158 @@
 
     <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
     <title>Behance Organica</title>
+	<script type = "text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type = "text/javascript" language = "javascript">
+     window.onload=function(){
+	 const form = document.getElementById('myForm');
+
+		// Add submit event listener
+		form.addEventListener('submit', (event) => {
+		  // Prevent form submission
+		  event.preventDefault();
+
+		  // Get form inputs
+		 const brandField = document.getElementById('brand');
+         const nameField = document.getElementById('name');
+		
+		const descriptionField = document.getElementById('description');
+		const priceField = document.getElementById('price');
+
+		  // Define regex patterns
+		  const brandRegex = /^[a-zA-Z0-9]+$/;
+			const nameRegex = /^[a-zA-Z0-9\s]+$/;
+			const categoryRegex = /^[a-zA-Z\s]+$/;
+			const descriptionRegex = /^[a-zA-Z0-9\s]+$/;
+			const priceRegex = /^[0-9]+$/;
+
+		  // Validate inputs
+		  let isValid = true;
+
+		  if (!brandField.value.trim().match(brandRegex)) {
+			// Invalid first name
+			brandField.classList.add('is-invalid');
+			isValid = false;
+		  } 
+
+		  if (!nameField.value.trim().match(nameRegex)) {
+			// Invalid last name
+			nameField.classList.add('is-invalid');
+			isValid = false;
+		  } 
+
+		  if (!descriptionField.value.trim().match(descriptionRegex)) {
+			// Invalid phone number
+			descriptionField.classList.add('is-invalid');
+			isValid = false;
+		  } 
+
+		  if (!priceField.value.trim().match(priceRegex)) {
+			// Invalid email
+			priceField.classList.add('is-invalid');
+			isValid = false;
+		  } 
+
+		  // Submit form if valid
+		  if (isValid) {
+			form.submit();
+		  }
+		});
+	 }
+	</script>
 </head>
 
 <body>
+<nav class="navbar navbar-expand-lg" style="background-color: #B2D2A4;">
+	  <div class="container-fluid">
+		 <span class="navbar-brand mb-0 h1">Behance Organica    Hi, ${user.firstName}</span>
+		<form class="form-inline" action="logout" method="POST">
+		<button class="btn btn-outline-success" type="submit">Logout</button>
+		
+        </form>
+	  </div>
+	</nav>
+	<br>
+	<br>
+	<br>	
+
+	<div class="container">
+       <div class="row align-middle">
+		<div class="col-sm-12">
+	<c:choose>  
+    <c:when test="${fn:length(allproducts) > 0}">
+       
+
+			<h2>Here are all Products</h2>
+		    <div class="card">
+			<div class="card-body">
+			<table class="table">
+					
+					<thead>
+						<tr>
+							<th>Product Category</th>
+							<th>Product Brand</th>
+							<th>Product Name</th>
+							<th>Product Description</th>
+							<th>Price Per unit</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach  var="product" items="${allproducts}">
+						   
+							<tr>
+								<td>${product.productCategory}</td>
+								<td>${product.productBrand}</td>
+								<td>${product.productName}</td>
+								<td>${product.productDescription}</td>
+								<td>${product.price}</td>
+								
+							</tr>
+					
+						</c:forEach>
+					</tbody>
+				</table>
+
+            </div >
+			</div >
+		<!--  </form> -->
+    </c:when>
+    <c:otherwise>
+	<br>
+	<br>
+       <h2>No products.</h2>
+    </c:otherwise>
+</c:choose>
+   
+</div>
+    </div>	
+    </div>
+	 <div class="container">
+        <div class="row align-middle">
+		<div class="col-sm-8 ">
+		<div class="card">
+			<div class="card-body">
 <h2>Add New Products Below: </h2>
 
 	<!-- Use HTML Form Tags.... Redirect to Product Controller.....Annotate Product Pojo -->
 	
 	
-	<form:form action="addproduct" method="post"
-		modelAttribute="product" >
+	<form:form id="myForm" action="addproduct" method="post" modelAttribute="product" >
 
 		<table>
 
 			<tr>
 				<td>Product Brand:</td>
-				<td><form:input type="text" path="productBrand" size="30" required="required" /></td>
+				<td><form:input type="text" path="productBrand" class="form-control" id="brand" size="30" required="required" /></td>
 			</tr>
 
 			<tr>
 				<td>Product Name:</td>
-				<td><form:input type="text" path="productName" size="30" required="required"/>
+				<td><form:input type="text" path="productName" class="form-control" id="name" size="30" required="required"/>
 				
 			</tr>
 			<tr>
 			<label for="category">Category :</label>
-				<form:select name="category" id="product" path="productCategory">
+				<form:select name="category" id="product" path="productCategory" class="form-control" >
 					<form:option value="food" label="Food"/>
 					<form:option value="beverages" label="Beverages"/>
 					<form:option value="beauty" label="Beauty"/>
@@ -51,29 +178,34 @@
 			
 			<tr>
 				<td>Product Description:</td>
-				<td><form:textarea path="productDescription" rows="10" cols="30" required="required"/>
+				<td><form:textarea path="productDescription" rows="10" cols="30" class="form-control" id="description" required="required"/>
 				
 			</tr>
 
-			<tr>
-				<td>Available Quantity:</td>
-				<td><form:input type="number" path="avlQuantity" size="5" required="required" min="0"/>
-				</td>
-			</tr>
+			
 			
 			<tr>
 				<td>Price Per Unit:</td>
-				<td><form:input type="text" path="price" size="30" required="required"/>
+				<td><form:input type="text" path="price" size="30" class="form-control" id="price" required="required"/>
 				
 			</tr>
 			
 			
 			<tr>
-				<td colspan="2"><input type="submit" value="Post Your Product Online" /></td>
+				<td colspan="2"><input type="submit" class="btn btn-primary" value="Post Your Product Online"  /></td>
 			</tr>
 		</table>
 
 	</form:form>
+	 </div> 
+	  </div>
+	   </div>
+	    </div>
+		 </div>
+		
+	<br>
+	<br>
+	<br>
 		  <!-- Footer -->
     <footer class="text-center text-lg-start bg-dark text-muted">
         <!-- Section: Social media -->
@@ -156,6 +288,7 @@
         <!-- Copyright -->
     </footer>
     <!-- Footer -->
+
 	   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     
     

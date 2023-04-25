@@ -5,20 +5,28 @@ package com.webtools.Final_Project.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import com.webtools.Final_Project.DAO.OrderDAO;
+import com.webtools.Final_Project.DAO.ProductDAO;
 import com.webtools.Final_Project.DAO.UserDAO;
+import com.webtools.Final_Project.Model.Cart;
+import com.webtools.Final_Project.Model.Product;
 import com.webtools.Final_Project.Model.User;
 
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
 
 
 
@@ -35,17 +43,20 @@ public class UserController {
    
    
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    protected String goToHome(ModelMap model) throws Exception {
-      
+    protected String goToHome(ModelMap model,HttpSession session) throws Exception {
+        if(session.getAttribute("user") == null) {
     	model.addAttribute("user", new User());
-    	 System.out.println("home page");
+    	System.out.println("home page");
     	return "index";
-
+    }
+        return "redirect:userDashboard";
 	}
+  
 	@RequestMapping(value = "register", method = RequestMethod.POST)
-	protected String registerNewUser(@ModelAttribute("user") User user,UserDAO userdao,HttpServletRequest request) throws Exception {
-		    
-	
+	protected String registerNewUser( @ModelAttribute("user") User user,UserDAO userdao,HttpServletRequest request,HttpSession session) throws Exception {
+		if(userdao.uniqueCustomer(user.getEmailId()) != null) {
+			return "redirect:/";
+		}
             System.out.println(user);
             userdao.saveUser(user);
             SimpleMailMessage email = new SimpleMailMessage();
@@ -55,7 +66,8 @@ public class UserController {
 			emailSender.send(email);
 			System.out.println("user registration complete");
             request.setAttribute("registerResponse", "Success");
-            return "redirect:/";
+            session.setAttribute("user", user);
+            return "redirect:userDashboard";
     }
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	protected String loginUser(HttpServletRequest request,HttpSession session,UserDAO userDAO,ModelMap model) throws Exception {
@@ -69,7 +81,7 @@ public class UserController {
 			
 			
 		    if(emailid.equals("admin@gmail.com") && password.equals("admin")) {
-		    	
+
 				return "redirect:adminDashboard";
 				
 			}
@@ -95,6 +107,12 @@ public class UserController {
      
     	return "userDashboard";
 
+	}
+	@RequestMapping(value = "logout", method = RequestMethod.POST)
+	public String logoutUser(HttpServletRequest request){
+		System.out.println("Entered Logout area");
+		request.getSession().invalidate();
+		return "redirect:/";
 	}
 	
 	

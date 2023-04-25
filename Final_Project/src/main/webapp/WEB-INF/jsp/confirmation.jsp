@@ -20,7 +20,10 @@
 	 <nav class="navbar navbar-expand-lg" style="background-color: #B2D2A4;">
 	  <div class="container-fluid">
 		 <span class="navbar-brand mb-0 h1">Behance Organica    Hi, ${user.firstName}</span>
+		<form class="form-inline" action="logout" method="POST">
+		<button class="btn btn-outline-success" type="submit">Logout</button>
 		
+        </form>
 	  </div>
 	</nav>
 <br>

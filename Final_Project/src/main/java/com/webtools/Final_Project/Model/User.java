@@ -21,14 +21,12 @@ import org.springframework.stereotype.Component;
 		@Id
 	    @GeneratedValue(strategy=GenerationType.IDENTITY)
 		private int userid;
-		
 	    private String firstName;
 	    private String lastName;
 	    private String emailId;
 	    private String password;
 	    private String phoneNumber;
-	    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
-	    Cart cart;
+	  
 
 	    
 	    public User(){}

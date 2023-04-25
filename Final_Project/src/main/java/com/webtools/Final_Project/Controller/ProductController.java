@@ -26,8 +26,11 @@ public class ProductController {
 	ProductDAO productdao;
 	
 	@RequestMapping(value = "adminDashboard", method = RequestMethod.GET)
-    protected String adminHome(ModelMap model) throws Exception {
+    protected String adminHome(ModelMap model,ProductDAO productDao) throws Exception {
       
+		List<Product> products= productDao.allProducts();
+		System.out.println(products);
+		model.addAttribute("allproducts",products);
     	model.addAttribute("product", new Product());
     	return "adminDashboard";
 

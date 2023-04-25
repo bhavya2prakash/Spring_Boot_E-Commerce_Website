@@ -44,11 +44,46 @@ public class OrderDAO extends DAO{
 			getSession().save(cart);
 			System.out.println("DAO222");
 			commit();
+			DAO.close();
 			
 		} catch (HibernateException e) {
 			rollback();
 			throw new Exception("Exception while placing order: " + e.getMessage());
 		}
 	}
+	
+	public List<Cart> allOrderDetails(){
+		Query q = getSession().createQuery("from Cart");
+		List<Cart> orderList = q.list();
+		return orderList;
+	}
+	public List<Cart> allUserOrderDetails(User user){
+		String hql = "FROM Cart c WHERE c.user = :user";
+		List<Cart> carts = getSession().createQuery(hql, Cart.class)
+		                          .setParameter("user", user)
+		                          .getResultList();
+		return carts;
+	}
+	public OrderItem findItem(String name,List<OrderItem> orderItemList ) {
+        for (OrderItem item : orderItemList) {
+            if (name.equals(item.getItemName())) {
+                return item;
+            }
+        }
+        return null;
+    }
+    
+   
+    
+    public void deleteItem(OrderItem item,List<OrderItem> orderItemList,Cart cart) {
+    	orderItemList.remove(item);
+    	cart.getOrderItemList().remove(item);
+    }
+    
+    public void deleteItem(String name,List<OrderItem> orderItemList,Cart cart) {
+        OrderItem item = findItem(name, orderItemList);
+        if (item != null)
+            deleteItem(item,orderItemList, cart);
+    }
 
 }

@@ -17,7 +17,69 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 	<script type = "text/javascript" language = "javascript">
+     window.onload=function(){
 
+
+	 const form = document.getElementById('myForm');
+
+		// Add submit event listener
+		form.addEventListener('submit', (event) => {
+		  // Prevent form submission
+		  event.preventDefault();
+
+		  // Get form inputs
+		  const firstNameInput = document.getElementById('firstName');
+		  const lastNameInput = document.getElementById('lastName');
+		  const phoneNumberInput = document.getElementById('phoneNumber');
+		  const emailInput = document.getElementById('emailId');
+		  const passwordInput = document.getElementById('password');
+
+		  // Define regex patterns
+		  const namePattern = /^[a-zA-Z\s]*$/; // only letters and spaces
+		  const phonePattern = /^\d{10}$/; // 10 digits only
+		  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // valid email format
+		  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/; // at least 8 characters, one uppercase, one lowercase, and one number
+
+		  // Validate inputs
+		  let isValid = true;
+
+		  if (!firstNameInput.value.trim().match(namePattern)) {
+			// Invalid first name
+			firstNameInput.classList.add('is-invalid');
+			isValid = false;
+		  } 
+
+		  if (!lastNameInput.value.trim().match(namePattern)) {
+			// Invalid last name
+			lastNameInput.classList.add('is-invalid');
+			isValid = false;
+		  } 
+
+		  if (!phoneNumberInput.value.trim().match(phonePattern)) {
+			// Invalid phone number
+			phoneNumberInput.classList.add('is-invalid');
+			isValid = false;
+		  } 
+
+		  if (!emailInput.value.trim().match(emailPattern)) {
+			// Invalid email
+			emailInput.classList.add('is-invalid');
+			isValid = false;
+		  } 
+
+		  if (!passwordInput.value.trim().match(passwordPattern)) {
+			// Invalid password
+			passwordInput.classList.add('is-invalid');
+			alert("Password at least 8 characters, one uppercase, one lowercase, and one number");
+			isValid = false;
+		  } 
+
+		  // Submit form if valid
+		  if (isValid) {
+			form.submit();
+		  }
+		});
+	 }
 	</script>
 </head>
 
@@ -39,13 +101,13 @@
 			<div class="card-body">
 		  <h2>Sign Up</h2>
 		
-			<form:form id="form1" action="register" modelAttribute="user" method="post">
+			<form:form id="myForm" action="register" modelAttribute="user" method="post">
 				
 				<!-- action="register" -->
 				<table>
 					<tr>
 						<td>First Name:</td>
-						<td><form:input path="firstName" class="form-control" id="firstName" size="30"/>
+						<td><form:input path="firstName" class="form-control" id="firstName" size="30" required="required"/>
 						</td>
 					</tr>
 

@@ -21,7 +21,10 @@
    <nav class="navbar navbar-expand-lg" style="background-color: #B2D2A4;">
 	  <div class="container-fluid">
 		 <span class="navbar-brand mb-0 h1">Behance Organica    Hi, ${user.firstName}</span>
+		<form class="form-inline" action="logout" method="POST">
+		<button class="btn btn-outline-success" type="submit">Logout</button>
 		
+        </form>
 	  </div>
 	</nav>
 <br><br>
@@ -68,6 +71,11 @@
 											   <b>Description: </b> ${orderItem.itemDescription}<br>
 											   <b>Price per Unit: </b> ${orderItem.itemPrice}<br>
 											   <b>Quantity Ordered: </b> ${orderItem.purchaseQuantity}<br>
+											   <form action="remove" method="POST">
+                                                <input type="hidden" value="${orderItem.itemName}" name="removeItem"/>
+												<input type="submit" value="Remove Item" class="btn btn-outline-success">
+
+										       </form>
 											   <hr>
 							
 										</c:forEach>

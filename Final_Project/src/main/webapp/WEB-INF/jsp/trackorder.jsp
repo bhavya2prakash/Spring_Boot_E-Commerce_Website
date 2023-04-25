@@ -23,58 +23,12 @@
 		<form class="form-inline" action="logout" method="POST">
 		<button class="btn btn-outline-success" type="submit">Logout</button>
 		
-  </form>
+        </form>
 	  </div>
 	</nav>
 	<br>
 	<br>
-	<br>
-     <div class="container">
-        <div class="row align-middle">
-		<div class="col-sm-6 ">
-		<div class="card">
-			<div class="card-body">
-	           <form action="searchproduct" method="GET">
-
-				<label for="category">What Do you wish to buy:</label>
-				<select name="category" id="product" class="form-control">
-				    <option value="Select" disabled selected>Select</option>
-					<option value="food">Food</option>
-					<option value="beverages">Beverages</option>
-					<option value="beauty">Beauty</option>
-					<option value="home">Home Decor</option>
-					<option value="fashion">Fashion</option>
-				</select>
-					
-					<input type="submit" value="Find Products"  class="btn btn-primary">
-
-				</form>
-	</div>
-	  </div>	
-    </div>	
-	<div class="col-sm-3 ">
-	<div class="card">
-			<div class="card-body">
-	<form action="trackorder" method="POST">
-		
-	<input type="submit" class="btn btn-primary" value="Track Your Orders">
-
-	</form>
-	</div>
-	</div>
-	</div>
-	<div class="col-sm-3 ">
-	<div class="card">
-			<div class="card-body">
-	
-	<form action="cart" method="GET">
-			<input type="submit" class="btn btn-primary" value="View Cart">
-		</form>
-	</div>
-    </div>	
-	</div>
-    </div>	
-    </div>	
+	<br>	
 	<br>
 	<br>
 	<br>
@@ -82,37 +36,35 @@
         <div class="row align-middle">
 		<div class="col-sm-12">
 	<c:choose>  
-    <c:when test="${fn:length(searchItemList) > 0}">
+    <c:when test="${fn:length(carts) > 0}">
        	<!-- <form action="addtocart" method="POST">-->
 
-			<h2>Here are your search results</h2>
+			<h2>Here are your past orders</h2>
 		    <div class="card">
 			<div class="card-body">
 			<table class="table">
 					
 					<thead>
 						<tr>
-							<th>Product Category</th>
-							<th>Product Brand</th>
-							<th>Product Name</th>
-							<th>Product Description</th>
-							<th>Price Per unit</th>
-							<th>Quantity to Purchase</th>
+							<th>Order Id</th>
+							<th>Order Item</th>
+							<th>Order Total</th>
+							<th>Order Date</th>
+							<th>Delivery Date</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach  var="product" items="${searchItemList}">
-						<form action="addtocart" method="POST">
+						<c:forEach  var="carts" items="${carts}">
+						   <c:forEach  var="order" items="${carts.orderItemList}">
 							<tr>
-								<td>${product.productCategory}</td>
-								<td>${product.productBrand}</td>
-								<td>${product.productName}</td>
-								<td>${product.productDescription}</td>
-								<td>${product.price}</td>
-								<td><input type="number" class="form-control" name="purchaseQty${product.productID}" placeholder = "Quantity" min="1" max="10" required = "required"></td>
-								<td><button name="productID" class="btn btn-primary" type="submit" value="${product.productID}">Add Item To Cart</button></td>
+								<td>${carts.orderId}</td>
+								<td>${order.itemName}</td>
+								<td>${order.itemPrice}</td>
+								<td>${carts.orderDate}</td>
+								<td>${carts.deliveryDate}</td>
+								
 							</tr>
-						  </form>
+						</c:forEach>
 						</c:forEach>
 					</tbody>
 				</table>
@@ -124,7 +76,7 @@
     <c:otherwise>
 	<br>
 	<br>
-       <h2>Please select a category with available products.</h2>
+       <h2>No orders.</h2>
     </c:otherwise>
 </c:choose>
    

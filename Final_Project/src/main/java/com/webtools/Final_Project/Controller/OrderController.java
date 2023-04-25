@@ -60,11 +60,33 @@ public class OrderController {
 		request.getSession().setAttribute("cart", cart);
 		return "userDashboard";
 	}
-	@RequestMapping(value="cart", method = RequestMethod.POST)
+	@RequestMapping(value="cart", method = RequestMethod.GET)
 	public String cart(HttpServletRequest request){
 		
 
 		return "viewCart";
+	}
+	@RequestMapping(value="remove", method = RequestMethod.POST)
+	public String cartRemove(HttpServletRequest request){
+		Cart cart = (Cart)request.getSession().getAttribute("cart");
+		if (cart == null) {
+	            cart = new Cart();
+	    }
+		List<OrderItem> myList = (List<OrderItem>)request.getSession().getAttribute("orderItemList");
+		String removeItem= request.getParameter("removeItem");
+	    orderDao.deleteItem(removeItem, myList,cart);         
+		request.getSession().setAttribute("orderItemList", myList);
+		return "redirect:cart";
+	}
+	
+	@RequestMapping(value="trackorder", method = RequestMethod.POST)
+	public String trackorder(HttpServletRequest request,ModelMap model) {
+		User user=(User)request.getSession().getAttribute("user");
+		List<Cart> carts= orderDao.allUserOrderDetails(user);
+		System.out.println(carts);
+		model.addAttribute("carts",carts);
+		return "trackorder";
+
 	}
 	@RequestMapping(value="delivery", method = RequestMethod.POST)
 	public String delivery(HttpServletRequest request, ModelMap model){
@@ -101,12 +123,7 @@ public class OrderController {
         model.addAttribute("currency", Currency.USD);
 		return "payment";
 	}
-	@RequestMapping(value = "/payment", method = RequestMethod.GET)
-	public String paymentCompleted() {
-	    // Display payment completion message to the user
-	   
-	    return "userDashboard";
-	}
+
 	
 	@RequestMapping(value="charge", method = RequestMethod.POST)
 	    public String charge(ModelMap model,HttpServletRequest request)
@@ -155,6 +172,8 @@ public class OrderController {
 	        System.out.println((Cart)request.getSession().getAttribute("cart"));
 	        System.out.println(myList.get(0).getCart());
 	        orderDao.saveOrder(cart);
+	        request.getSession().removeAttribute("cart");
+	        request.getSession().removeAttribute("orderItemList");
 	        return "confirmation";
 		    }
 		    catch(StripeException e  ) {

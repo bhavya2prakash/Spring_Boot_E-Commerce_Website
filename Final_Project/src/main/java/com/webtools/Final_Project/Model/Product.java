@@ -21,7 +21,7 @@ public class Product {
 	private String productCategory;
 	private String productName;
 	private String productDescription;
-	private int avlQuantity;
+	
 	private float price;
 
 	
@@ -63,13 +63,6 @@ public class Product {
 		this.productDescription = productDescription;
 	}
 
-	public int getAvlQuantity() {
-		return avlQuantity;
-	}
-
-	public void setAvlQuantity(int avlQuantity) {
-		this.avlQuantity = avlQuantity;
-	}
 
 	public float getPrice() {
 		return price;
@@ -95,7 +88,7 @@ public class Product {
 	public String toString() {
 		return "Product [productID=" + productID + ", productBrand=" + productBrand + ", productCategory="
 				+ productCategory + ", productName=" + productName + ", productDescription=" + productDescription
-				+ ", avlQuantity=" + avlQuantity + ", price=" + price + "]";
+				+ ", avlQuantity="  + ", price=" + price + "]";
 	}
 
 	

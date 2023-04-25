@@ -20,7 +20,10 @@
 	 <nav class="navbar navbar-expand-lg" style="background-color: #B2D2A4;">
 	  <div class="container-fluid">
 		 <span class="navbar-brand mb-0 h1">Behance Organica    Hi, ${user.firstName}</span>
+		<form class="form-inline" action="logout" method="POST">
+		<button class="btn btn-outline-success" type="submit"">Logout</button>
 		
+        </form>
 	  </div>
 	</nav>
 <br>
@@ -35,6 +38,15 @@
 						</div>
 						
 						<div class="panel-body">
+						
+						<b>Customer Name:</b>${cart.buyerName}<br>
+						<b>Email Id:</b>${cart.buyerEmail}<br>
+						<b>Phone Number:</b>${cart.buyerPhone}<br>
+						<b>Address Information:</b>${cart.deliveryAddress1}, 
+						${cart.deliveryAddress2}<br>
+						<b>City:</b>${cart.city}<br>
+						<b>Zip:</b>${cart.zip}<br>
+						<b>State:</b>${cart.state}<br><hr>
 							<h3>Total Price ${totalOrderWorth}</h3><br>
 							<form action='charge' method='POST' id='checkout-form'>
 								<input type='hidden' value='${totalOrderWorth*100}' name='amount' />

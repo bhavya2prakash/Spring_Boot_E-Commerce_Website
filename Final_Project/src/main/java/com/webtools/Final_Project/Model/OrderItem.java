@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class OrderItem {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long itemID;
 	private String itemBrand;
 	private String itemName;

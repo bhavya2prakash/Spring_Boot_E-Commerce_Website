@@ -42,7 +42,7 @@ public class Cart {
     @JoinColumn(name="fkchrge")
 	private ChargeRequest chargeRequest;
 	
-	@OneToMany(mappedBy="cart" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="cart" ,cascade = CascadeType.ALL,orphanRemoval = true)
 	List<OrderItem> orderItemList = new ArrayList<>();
 	
 	public Cart() {}
@@ -167,6 +167,8 @@ public class Cart {
 	public void setChargeRequest(ChargeRequest chargeRequest) {
 		this.chargeRequest = chargeRequest;
 	}
+	   
+	
 
 	@Override
 	public String toString() {

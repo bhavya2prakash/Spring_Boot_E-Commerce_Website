@@ -27,7 +27,7 @@ public class ChargeRequest {
     private Currency currency;
     private String stripeEmail;
     private String stripeToken;
-    @OneToOne(mappedBy="chargeRequest", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy="chargeRequest", cascade = CascadeType.ALL,orphanRemoval = true)
     Cart cart;
 	
     public int getChargeRequestID() {
@@ -77,7 +77,7 @@ public class ChargeRequest {
 	public String toString() {
 		return "ChargeRequest [chargeRequestID=" + chargeRequestID + ", description=" + description + ", amount="
 				+ amount + ", currency=" + currency + ", stripeEmail=" + stripeEmail + ", stripeToken=" + stripeToken
-				+ ", cart=" + cart + "]";
+				+ ", cart="  + "]";
 	}
 
 	

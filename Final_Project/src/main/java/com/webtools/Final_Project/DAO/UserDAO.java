@@ -18,6 +18,7 @@ public class UserDAO extends DAO{
 	        begin(); //inherited from super class DAO
 	        getSession().save(user);
 	        commit();
+	        DAO.close();  
 	        } catch(Exception e) {
 	            rollback();
 	            System.out.println("Exception: " + e.getMessage());

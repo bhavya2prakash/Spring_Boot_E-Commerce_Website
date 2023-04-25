@@ -16,6 +16,5 @@ public class FinalProjectApplication extends SpringBootServletInitializer implem
 		SpringApplication.run(FinalProjectApplication.class, args);
 	}
 	
-	
 
 }
